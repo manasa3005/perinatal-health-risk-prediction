@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Perinatal Health Risk Prediction</title>
+  <style>
+    body {
+      background-image: url('C:\Users\pavithra\Desktop\cool');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+    .container {
+      width: 300px;
+      margin: 0 auto;
+      backdrop-filter: blur(5px);
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 20px
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      color:red;
+    }
+
+    .form-group input {
+      width: 100%;
+    }
+
+    .predict-btn {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+   
+  <div class="container">
+    <h1>Perinatal Health Risk Prediction</h1>
+    <form id="prediction-form">
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+      </div>
+      <div class="form-group">
+        <label for="sbp">Systolic BP:</label>
+        <input type="number" id="sbp" name="sbp" required>
+      </div>
+      <div class="form-group">
+        <label for="dbp">Diastolic BP:</label>
+        <input type="number" id="dbp" name="dbp" required>
+      </div>
+      <div class="form-group">
+        <label for="bs">Blood Sugar:</label>
+        <input type="number" id="bs" name="bs" required>
+      </div>
+      <div class="form-group">
+        <label for="temperature">Body Temperature:</label>
+        <input type="number" id="temperature" name="temperature" step="0.1" required>
+      </div>
+      <button type="submit" class="predict-btn">Predict</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#prediction-form').submit(function(event) {
+        event.preventDefault();  // Prevent default form submission
+
+        // Get form data
+        var formData = {
+          age: $('#age').val(),
+          sbp: $('#sbp').val(),
+          dbp: $('#dbp').val(),
+          bs: $('#bs').val(),
+          temperature: $('#temperature').val(),
+          heartRate: $('#heart-rate').val()
+        };
+
+        // Make AJAX request to server-side route for prediction
+        $.ajax({
+          type: 'POST',
+          url: '/predict',
+          data: JSON.stringify(formData),
+          contentType: 'application/json',
+          success: function(response) {
+            // Handle the prediction response
+            // Update the UI with the prediction result
+            $('#result').text(response.prediction);
+          },
+          error: function(error) {
+            // Handle errors
+            console.log(error);
+          }
+        });
+      });
+    });  
+  </script>
+</body>
+</html>
+
+
+
+ 
